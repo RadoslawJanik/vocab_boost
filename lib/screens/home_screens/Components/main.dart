@@ -13,7 +13,9 @@ var formatter =  DateFormat('yyyy-MM-dd');
 String today = formatter.format(now);
 
 final String url =
-'https://api.wordnik.com/v4/words.json/wordOfTheDay?date='+ today + '&api_key' + apiKey ;
+'https://api.wordnik.com/v4/words.json/wordOfTheDay?date=$today&api_key=$apiKey' ;
+
+
 
 Future<Word> fetchWord() async {
   final response = await http
@@ -60,9 +62,40 @@ class _MainState extends State<Main> {
         children: [FutureBuilder<Word>(future: futureWord,
         builder:(context,snapshot){
           if (snapshot.hasData){
-        //TODO Data display
+            return Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [Text('${snapshot.data!.word[0].toUpperCase()}${snapshot.data!.word.substring(1)}', style: TextStyle(fontSize: 45, fontFamily:'Roboto',fontWeight: FontWeight.w400,color: Colors.black),),
+                  const Icon(Icons.mic,
+                  size: 35.0,)],
+                ),
+                Text(
+                          snapshot.data!.definitions[0].partOfSpeech,
+                          style: const TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 18,
+                            color: Colors.grey,
+                            fontStyle: FontStyle.italic,
+                          ),
+                          ),
+                          SizedBox(height: 10,),
+                 Text(
+                          snapshot.data!.definitions[0].text,
+                           style: const TextStyle(
+                            fontFamily: 'Roboto',
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          )
+              ],
+            );
           }else if (snapshot.hasError){
-            return Text("could not fetch your today's word");
+            return const Text('could not fetch your word');
           }
           return Center(child: CircularProgressIndicator(),);
         } ,),],)),

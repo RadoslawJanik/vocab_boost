@@ -1,16 +1,17 @@
-import 'package:vocab_boost/models/Word.dart';
+
 
 class Definition{
-  final String source ;
-  final String text;
-  final String partOfSpeech;
+  String source ;
+  String text;
+  String partOfSpeech;
 
-  Definition({required this.source, required this.text, required this.partOfSpeech});
+  Definition({required this.source,required this.text,required this.partOfSpeech});
+
  factory Definition.fromJson(Map<String, dynamic> json) {
     return Definition(
-      source: json['source '],
+      source: json['source'],
       text: json['text'],
-      partOfSpeech: json['partOfSpeech'],
+      partOfSpeech: json["partOfSpeech"]
     );
   }
 }

@@ -1,1 +1,1 @@
-final String apiKey = '65vhxp2jj45hciubo9wg7a3n331p0kphzzuyb0bu1ykq6enzk';
+const String apiKey = '65vhxp2jj45hciubo9wg7a3n331p0kphzzuyb0bu1ykq6enzk';
