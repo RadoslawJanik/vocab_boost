@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+
+
+import '../screens/home_screens/Components/top_section.dart';
 import '../screens/home_screens/home_screen.dart';
+import '../screens/past_words/past_words.dart';
 import 'drawer.dart';
 
 
@@ -17,7 +21,7 @@ class _NavState extends State<Nav> {
   int _selectedIndex=0;
   static List<Widget> _widgetOptions = <Widget>[
   Home(),
-  Text('Past Words')
+  PastWords(),
   ];
 
   void _onItemTapped(int index){
@@ -37,7 +41,10 @@ class _NavState extends State<Nav> {
           IconButton(icon: Icon(Icons.favorite,), onPressed: () {  },)
         ],
       ),
-      body: Center(child: _widgetOptions[_selectedIndex]),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items:  const<BottomNavigationBarItem>[
           BottomNavigationBarItem(
