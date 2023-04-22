@@ -1,3 +1,3 @@
 # vocab_boost
 
-A new Flutter project.
+App to boost your language!
