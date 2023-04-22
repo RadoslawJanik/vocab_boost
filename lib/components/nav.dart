@@ -34,13 +34,47 @@ var _savedWords = Nav._savedWords;
     });
   }
 
-  void _openFaveriteWords(){
-    Navigator.off(context)(
-      MaterialPageRoute(builder:(BuildContext (context) => Scaffold(
-
-      )))
-    )
+   void _openFavorteWords() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return Scaffold(
+            backgroundColor: Colors.white,
+            appBar: AppBar(
+              title: Text('Favorite Words'),
+              elevation: 0.0,
+            ),
+            body: Container(
+              child: _savedWords.length != 0
+                  ? ListView(
+                      children: _savedWords
+                          .map(
+                            (word) => Padding(
+                              padding: const EdgeInsets.fromLTRB(12, 8, 12, 8),
+                              child: Text(
+                                '${word[0].toUpperCase()}${word.substring(1)}',
+                                style: TextStyle(fontSize: 20.0),
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    )
+                  : Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Text(
+                          'No favorite words! Click the heart on a word card to add some!',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+            ),
+          );
+        },
+      ),
+    );
   }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +84,12 @@ var _savedWords = Nav._savedWords;
         title: Text('VocabBoost'),
         elevation: 0,
         actions: [
-          IconButton(icon: Icon(Icons.favorite,), onPressed: _openFaveriteWords() {  },)
+          IconButton(
+            icon: Icon(
+              Icons.favorite,
+            ),
+            onPressed: _openFavorteWords,
+          ),
         ],
       ),
       body: IndexedStack(
