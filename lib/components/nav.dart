@@ -6,12 +6,13 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../screens/home_screens/Components/top_section.dart';
 import '../screens/home_screens/home_screen.dart';
 import '../screens/past_words/past_words.dart';
+import 'package:vocab_boost/models/saved_words.dart';
 import 'drawer.dart';
 
 
 class Nav extends StatefulWidget {
  
-
+static final _savedWords = SavedWords.savedWords;
   @override
   State<Nav> createState() => _NavState();
 }
@@ -24,10 +25,21 @@ class _NavState extends State<Nav> {
   PastWords(),
   ];
 
+var _savedWords = Nav._savedWords;
+
+
   void _onItemTapped(int index){
     setState(() {
      _selectedIndex = index; 
     });
+  }
+
+  void _openFaveriteWords(){
+    Navigator.off(context)(
+      MaterialPageRoute(builder:(BuildContext (context) => Scaffold(
+
+      )))
+    )
   }
   @override
   Widget build(BuildContext context) {
@@ -38,7 +50,7 @@ class _NavState extends State<Nav> {
         title: Text('VocabBoost'),
         elevation: 0,
         actions: [
-          IconButton(icon: Icon(Icons.favorite,), onPressed: () {  },)
+          IconButton(icon: Icon(Icons.favorite,), onPressed: _openFaveriteWords() {  },)
         ],
       ),
       body: IndexedStack(
