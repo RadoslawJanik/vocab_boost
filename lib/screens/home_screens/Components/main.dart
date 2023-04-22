@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:vocab_boost/key.dart';
 import 'dart:convert';
+import 'package:vocab_boost/models/saved_words.dart';
 
 import '../../../models/Word.dart';
 
@@ -34,7 +35,8 @@ Future<Word> fetchWord() async {
 
 
 class Main extends StatefulWidget {
-  const Main({super.key});
+ 
+  static final _savedWords = SavedWords.savedWords;
 
   @override
   State<Main> createState() => _MainState();
@@ -42,6 +44,7 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   late Future<Word>futureWord;
+  var _savedWords = Main._savedWords;
 
   @override
 
@@ -91,7 +94,8 @@ class _MainState extends State<Main> {
                             color: Colors.black,
                             fontWeight: FontWeight.w300,
                           ),
-                          )
+                          ),
+                          buildRow(snapshot.data!.word),
               ],
             );
           }else if (snapshot.hasError){
@@ -101,6 +105,36 @@ class _MainState extends State<Main> {
         } ,),],)),
         
       ),
+    );
+  }
+
+
+Widget buildRow(word) {
+    final alreadySaved = _savedWords.contains(word);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Icon(Icons.share),
+        IconButton(
+          icon: Icon(
+            alreadySaved ? Icons.favorite : Icons.favorite_border,
+            color: alreadySaved ? Colors.red : null,
+          ),
+          onPressed: () => {
+            setState(() {
+              if (alreadySaved) {
+                print('Removing: ' + word);
+                _savedWords.remove(word);
+                print(_savedWords);
+              } else {
+                print('Adding: ' + word);
+                _savedWords.add(word);
+                print(_savedWords);
+              }
+            })
+          },
+        ),
+      ],
     );
   }
 }
